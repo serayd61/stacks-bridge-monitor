@@ -1,13 +1,4 @@
-import {
-  ArrowDownLeft,
-  ArrowUpRight,
-  Activity,
-  Users,
-  Wallet,
-  TrendingUp,
-  Bitcoin,
-  Layers,
-} from 'lucide-react';
+import { Layers } from 'lucide-react';
 import StatsCard from '@/components/StatsCard';
 import TransactionTable from '@/components/TransactionTable';
 import PriceChart from '@/components/PriceChart';
@@ -113,7 +104,7 @@ export default async function Home() {
             title="Peg-In Volume (24h)"
             value={`${bridgeStats.totalVolume24h} BTC`}
             subtitle={`${bridgeStats.pegInCount} transactions`}
-            icon={ArrowDownLeft}
+            iconName="arrow-down-left"
             trend={{ value: 12.5, isPositive: true }}
             color="green"
           />
@@ -121,7 +112,7 @@ export default async function Home() {
             title="Peg-Out Volume (24h)"
             value={`${(parseFloat(bridgeStats.totalVolume24h) * 0.4).toFixed(2)} BTC`}
             subtitle={`${bridgeStats.pegOutCount} transactions`}
-            icon={ArrowUpRight}
+            iconName="arrow-up-right"
             trend={{ value: 8.3, isPositive: true }}
             color="orange"
           />
@@ -129,7 +120,7 @@ export default async function Home() {
             title="Active Users"
             value={bridgeStats.activeUsers.toString()}
             subtitle="Unique addresses"
-            icon={Users}
+            iconName="users"
             trend={{ value: 5.2, isPositive: true }}
             color="purple"
           />
@@ -137,7 +128,7 @@ export default async function Home() {
             title="Average Fee"
             value={`${bridgeStats.avgFee} BTC`}
             subtitle="Per transaction"
-            icon={Activity}
+            iconName="activity"
             trend={{ value: -2.1, isPositive: false }}
             color="blue"
           />

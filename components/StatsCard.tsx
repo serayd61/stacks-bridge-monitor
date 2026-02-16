@@ -1,12 +1,19 @@
 'use client';
 
-import { LucideIcon } from 'lucide-react';
+import { 
+  ArrowDownLeft, 
+  ArrowUpRight, 
+  Activity, 
+  Users,
+  TrendingUp,
+  TrendingDown 
+} from 'lucide-react';
 
 interface StatsCardProps {
   title: string;
   value: string;
   subtitle?: string;
-  icon: LucideIcon;
+  iconName: 'arrow-down-left' | 'arrow-up-right' | 'activity' | 'users';
   trend?: {
     value: number;
     isPositive: boolean;
@@ -14,14 +21,22 @@ interface StatsCardProps {
   color?: 'purple' | 'orange' | 'green' | 'blue';
 }
 
+const iconMap = {
+  'arrow-down-left': ArrowDownLeft,
+  'arrow-up-right': ArrowUpRight,
+  'activity': Activity,
+  'users': Users,
+};
+
 export default function StatsCard({
   title,
   value,
   subtitle,
-  icon: Icon,
+  iconName,
   trend,
   color = 'purple',
 }: StatsCardProps) {
+  const Icon = iconMap[iconName];
   const colorClasses = {
     purple: 'from-purple-500/20 to-purple-600/5 border-purple-500/30',
     orange: 'from-orange-500/20 to-orange-600/5 border-orange-500/30',
