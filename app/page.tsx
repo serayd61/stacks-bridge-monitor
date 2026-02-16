@@ -1,8 +1,14 @@
-import { Layers } from 'lucide-react';
+import { Layers, Github, Heart } from 'lucide-react';
 import StatsCard from '@/components/StatsCard';
 import TransactionTable from '@/components/TransactionTable';
 import PriceChart from '@/components/PriceChart';
 import NetworkStatus from '@/components/NetworkStatus';
+import TokenTable from '@/components/TokenTable';
+import DeFiProtocols from '@/components/DeFiProtocols';
+import NFTCollections from '@/components/NFTCollections';
+import EcosystemStats from '@/components/EcosystemStats';
+import PriceHeader from '@/components/PriceHeader';
+import QuickLinks from '@/components/QuickLinks';
 import {
   fetchBridgeStats,
   fetchSBTCStats,
@@ -10,50 +16,74 @@ import {
   fetchRecentBlocks,
   fetchMempoolStats,
   fetchBitcoinMempool,
+  fetchSTXData,
+  fetchStacksStats,
+  fetchDeFiProtocols,
+  fetchNFTCollections,
+  fetchTopTokens,
 } from '@/lib/api';
 
-export const revalidate = 30; // Revalidate every 30 seconds
+export const revalidate = 30;
 
 export default async function Home() {
-  // Fetch all data in parallel
-  const [bridgeStats, sbtcStats, transactions, blocks, mempoolStats, btcMempool] =
-    await Promise.all([
-      fetchBridgeStats(),
-      fetchSBTCStats(),
-      fetchRecentTransactions(),
-      fetchRecentBlocks(),
-      fetchMempoolStats(),
-      fetchBitcoinMempool(),
-    ]);
+  const [
+    bridgeStats,
+    sbtcStats,
+    transactions,
+    blocks,
+    mempoolStats,
+    btcMempool,
+    stxData,
+    stacksStats,
+    defiProtocols,
+    nftCollections,
+    topTokens,
+  ] = await Promise.all([
+    fetchBridgeStats(),
+    fetchSBTCStats(),
+    fetchRecentTransactions(),
+    fetchRecentBlocks(),
+    fetchMempoolStats(),
+    fetchBitcoinMempool(),
+    fetchSTXData(),
+    fetchStacksStats(),
+    fetchDeFiProtocols(),
+    fetchNFTCollections(),
+    fetchTopTokens(),
+  ]);
 
   return (
     <main className="min-h-screen">
+      {/* Price Ticker */}
+      <PriceHeader stxData={stxData} btcPrice={sbtcStats.btcPrice} />
+
       {/* Header */}
       <header className="border-b border-gray-800 bg-gray-900/80 backdrop-blur-sm sticky top-0 z-50">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="flex h-16 items-center justify-between">
             <div className="flex items-center gap-3">
-              <div className="flex items-center justify-center h-10 w-10 rounded-lg bg-gradient-to-br from-purple-500 to-orange-500">
+              <div className="flex items-center justify-center h-10 w-10 rounded-xl bg-gradient-to-br from-purple-500 to-orange-500 shadow-lg shadow-purple-500/20">
                 <Layers className="h-6 w-6 text-white" />
               </div>
               <div>
-                <h1 className="text-xl font-bold text-white">Bridge Monitor</h1>
-                <p className="text-xs text-gray-400">sBTC & Cross-Chain Analytics</p>
+                <h1 className="text-xl font-bold text-white">Stacks Dashboard</h1>
+                <p className="text-xs text-gray-400">Ecosystem Analytics & sBTC Monitor</p>
               </div>
             </div>
             
-            <div className="flex items-center gap-4">
-              <div className="hidden sm:flex items-center gap-2 text-sm">
+            <div className="flex items-center gap-3">
+              <div className="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-full bg-green-500/10 border border-green-500/20">
                 <div className="h-2 w-2 rounded-full bg-green-400 animate-pulse" />
-                <span className="text-gray-400">Live</span>
+                <span className="text-xs text-green-400 font-medium">Mainnet Live</span>
               </div>
               <a
                 href="https://github.com/serayd61/stacks-bridge-monitor"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="rounded-lg bg-gray-800 px-4 py-2 text-sm font-medium text-white hover:bg-gray-700 transition-colors"
+                className="flex items-center gap-2 rounded-lg bg-gray-800 px-4 py-2 text-sm font-medium text-white hover:bg-gray-700 transition-colors"
               >
-                GitHub
+                <Github className="h-4 w-4" />
+                <span className="hidden sm:inline">GitHub</span>
               </a>
             </div>
           </div>
@@ -61,165 +91,213 @@ export default async function Home() {
       </header>
 
       {/* Hero Section */}
-      <section className="relative overflow-hidden border-b border-gray-800">
-        <div className="absolute inset-0 bg-gradient-to-r from-purple-500/10 via-transparent to-orange-500/10" />
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-12">
-          <div className="text-center">
-            <h2 className="text-4xl font-bold text-white mb-4">
-              Real-Time Bridge Analytics
+      <section className="relative overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-b from-purple-500/5 via-transparent to-transparent" />
+        <div className="absolute inset-0 bg-[url('/grid.svg')] opacity-5" />
+        
+        <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-12">
+          <div className="text-center mb-10">
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-purple-500/10 border border-purple-500/20 mb-6">
+              <span className="text-purple-400 text-sm font-medium">Powered by Bitcoin</span>
+            </div>
+            <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
+              The Complete Stacks
+              <span className="bg-gradient-to-r from-purple-400 to-orange-400 bg-clip-text text-transparent"> Dashboard</span>
             </h2>
             <p className="text-lg text-gray-400 max-w-2xl mx-auto">
-              Monitor sBTC peg-ins, peg-outs, and cross-chain bridge activity on the Stacks blockchain.
-              Track volumes, fees, and network health in real-time.
+              Real-time analytics for the Stacks ecosystem. Track sBTC, DeFi protocols, 
+              NFTs, and network health — all in one place.
             </p>
           </div>
           
-          {/* Quick Stats */}
-          <div className="mt-8 grid grid-cols-2 md:grid-cols-4 gap-4">
-            <div className="rounded-lg bg-gray-800/50 border border-gray-700 p-4 text-center">
-              <p className="text-2xl font-bold text-white">{bridgeStats.totalVolume24h} BTC</p>
-              <p className="text-sm text-gray-400">24h Volume</p>
-            </div>
-            <div className="rounded-lg bg-gray-800/50 border border-gray-700 p-4 text-center">
-              <p className="text-2xl font-bold text-white">{bridgeStats.totalTransactions.toLocaleString()}</p>
-              <p className="text-sm text-gray-400">Total Transactions</p>
-            </div>
-            <div className="rounded-lg bg-gray-800/50 border border-gray-700 p-4 text-center">
-              <p className="text-2xl font-bold text-white">{sbtcStats.totalSupply}</p>
-              <p className="text-sm text-gray-400">sBTC Supply</p>
-            </div>
-            <div className="rounded-lg bg-gray-800/50 border border-gray-700 p-4 text-center">
-              <p className="text-2xl font-bold text-white">{sbtcStats.holders.toLocaleString()}</p>
-              <p className="text-sm text-gray-400">sBTC Holders</p>
-            </div>
-          </div>
+          {/* Ecosystem Stats */}
+          <EcosystemStats stats={stacksStats} />
         </div>
       </section>
 
       {/* Main Content */}
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-8">
-        {/* Stats Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-          <StatsCard
-            title="Peg-In Volume (24h)"
-            value={`${bridgeStats.totalVolume24h} BTC`}
-            subtitle={`${bridgeStats.pegInCount} transactions`}
-            iconName="arrow-down-left"
-            trend={{ value: 12.5, isPositive: true }}
-            color="green"
-          />
-          <StatsCard
-            title="Peg-Out Volume (24h)"
-            value={`${(parseFloat(bridgeStats.totalVolume24h) * 0.4).toFixed(2)} BTC`}
-            subtitle={`${bridgeStats.pegOutCount} transactions`}
-            iconName="arrow-up-right"
-            trend={{ value: 8.3, isPositive: true }}
-            color="orange"
-          />
-          <StatsCard
-            title="Active Users"
-            value={bridgeStats.activeUsers.toString()}
-            subtitle="Unique addresses"
-            iconName="users"
-            trend={{ value: 5.2, isPositive: true }}
-            color="purple"
-          />
-          <StatsCard
-            title="Average Fee"
-            value={`${bridgeStats.avgFee} BTC`}
-            subtitle="Per transaction"
-            iconName="activity"
-            trend={{ value: -2.1, isPositive: false }}
-            color="blue"
-          />
-        </div>
-
-        {/* Two Column Layout */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-8">
-          {/* Price Chart - 2 columns */}
-          <div className="lg:col-span-2">
-            <PriceChart
-              btcPrice={sbtcStats.btcPrice}
-              sbtcPrice={sbtcStats.sbtcPrice}
-            />
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-8 space-y-8">
+        
+        {/* sBTC Section */}
+        <section>
+          <div className="flex items-center gap-3 mb-6">
+            <div className="h-8 w-8 rounded-lg bg-orange-500/20 flex items-center justify-center">
+              <span className="text-orange-400 font-bold text-sm">₿</span>
+            </div>
+            <div>
+              <h2 className="text-xl font-bold text-white">sBTC Bridge</h2>
+              <p className="text-sm text-gray-400">Bitcoin on Stacks</p>
+            </div>
           </div>
           
-          {/* Network Status - 1 column */}
-          <div>
-            <NetworkStatus
-              stacksBlocks={blocks}
-              mempoolStats={mempoolStats}
-              btcMempool={btcMempool}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+            <StatsCard
+              title="sBTC Supply"
+              value={sbtcStats.totalSupply}
+              subtitle={`${sbtcStats.holders.toLocaleString()} holders`}
+              iconName="arrow-down-left"
+              color="orange"
+            />
+            <StatsCard
+              title="24h Peg-Ins"
+              value={`${bridgeStats.totalVolume24h} BTC`}
+              subtitle={`${bridgeStats.pegInCount} transactions`}
+              iconName="arrow-down-left"
+              trend={{ value: 12.5, isPositive: true }}
+              color="green"
+            />
+            <StatsCard
+              title="24h Peg-Outs"
+              value={`${(parseFloat(bridgeStats.totalVolume24h) * 0.4).toFixed(2)} BTC`}
+              subtitle={`${bridgeStats.pegOutCount} transactions`}
+              iconName="arrow-up-right"
+              trend={{ value: 8.3, isPositive: true }}
+              color="purple"
+            />
+            <StatsCard
+              title="Active Users"
+              value={bridgeStats.activeUsers.toString()}
+              subtitle="Unique addresses"
+              iconName="users"
+              trend={{ value: 5.2, isPositive: true }}
+              color="blue"
             />
           </div>
-        </div>
 
-        {/* Transaction Table */}
-        <TransactionTable transactions={transactions} />
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            <div className="lg:col-span-2">
+              <PriceChart
+                btcPrice={sbtcStats.btcPrice}
+                sbtcPrice={sbtcStats.sbtcPrice}
+              />
+            </div>
+            <div>
+              <NetworkStatus
+                stacksBlocks={blocks}
+                mempoolStats={mempoolStats}
+                btcMempool={btcMempool}
+              />
+            </div>
+          </div>
+        </section>
+
+        {/* Tokens Section */}
+        <section>
+          <div className="flex items-center gap-3 mb-6">
+            <div className="h-8 w-8 rounded-lg bg-purple-500/20 flex items-center justify-center">
+              <span className="text-purple-400 font-bold text-sm">$</span>
+            </div>
+            <div>
+              <h2 className="text-xl font-bold text-white">Tokens</h2>
+              <p className="text-sm text-gray-400">Top tokens by market cap</p>
+            </div>
+          </div>
+          <TokenTable tokens={topTokens} />
+        </section>
+
+        {/* DeFi & NFT Section */}
+        <section className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          <div className="lg:col-span-2">
+            <DeFiProtocols protocols={defiProtocols} />
+          </div>
+          <div>
+            <NFTCollections collections={nftCollections} />
+          </div>
+        </section>
+
+        {/* Recent Transactions & Quick Links */}
+        <section className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          <div className="lg:col-span-2">
+            <TransactionTable transactions={transactions} />
+          </div>
+          <div>
+            <QuickLinks />
+          </div>
+        </section>
 
         {/* Donate Section */}
-        <div className="mt-8 rounded-xl border border-gray-800 bg-gradient-to-br from-purple-500/10 to-orange-500/10 p-6">
-          <div className="text-center mb-6">
-            <h3 className="text-xl font-bold text-white mb-2">Support This Project</h3>
-            <p className="text-gray-400">Help us keep building open-source tools for the Stacks ecosystem</p>
+        <section className="rounded-xl border border-gray-800 bg-gradient-to-br from-purple-500/10 via-gray-900/50 to-orange-500/10 p-8">
+          <div className="text-center mb-8">
+            <div className="inline-flex items-center justify-center h-12 w-12 rounded-full bg-gradient-to-br from-purple-500 to-orange-500 mb-4">
+              <Heart className="h-6 w-6 text-white" />
+            </div>
+            <h3 className="text-2xl font-bold text-white mb-2">Support This Project</h3>
+            <p className="text-gray-400 max-w-md mx-auto">
+              Help us keep building open-source tools for the Stacks ecosystem. 
+              Every contribution helps!
+            </p>
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-2xl mx-auto">
             {/* BTC Donation */}
-            <div className="rounded-lg bg-gray-800/50 border border-orange-500/30 p-4">
-              <div className="flex items-center gap-2 mb-3">
-                <div className="h-8 w-8 rounded-full bg-orange-500/20 flex items-center justify-center">
-                  <span className="text-orange-400 font-bold text-sm">₿</span>
+            <div className="rounded-xl bg-gray-800/50 border border-orange-500/30 p-5 hover:border-orange-500/50 transition-colors">
+              <div className="flex items-center gap-3 mb-4">
+                <div className="h-10 w-10 rounded-full bg-orange-500/20 flex items-center justify-center">
+                  <span className="text-orange-400 font-bold">₿</span>
                 </div>
-                <span className="font-medium text-white">Bitcoin</span>
+                <div>
+                  <span className="font-semibold text-white">Bitcoin</span>
+                  <p className="text-xs text-gray-400">Native BTC</p>
+                </div>
               </div>
-              <div className="bg-gray-900 rounded-lg p-3">
-                <code className="text-xs text-orange-400 break-all select-all">
+              <div className="bg-gray-900 rounded-lg p-4">
+                <code className="text-sm text-orange-400 break-all select-all font-mono">
                   bc1q8jrgvvmu8ufjaqd47mrjpc8yr3x2rfhgkt9lx7
                 </code>
               </div>
             </div>
             
             {/* STX Donation */}
-            <div className="rounded-lg bg-gray-800/50 border border-purple-500/30 p-4">
-              <div className="flex items-center gap-2 mb-3">
-                <div className="h-8 w-8 rounded-full bg-purple-500/20 flex items-center justify-center">
-                  <span className="text-purple-400 font-bold text-sm">STX</span>
+            <div className="rounded-xl bg-gray-800/50 border border-purple-500/30 p-5 hover:border-purple-500/50 transition-colors">
+              <div className="flex items-center gap-3 mb-4">
+                <div className="h-10 w-10 rounded-full bg-purple-500/20 flex items-center justify-center">
+                  <span className="text-purple-400 font-bold">STX</span>
                 </div>
-                <span className="font-medium text-white">Stacks</span>
+                <div>
+                  <span className="font-semibold text-white">Stacks</span>
+                  <p className="text-xs text-gray-400">STX Token</p>
+                </div>
               </div>
-              <div className="bg-gray-900 rounded-lg p-3">
-                <code className="text-xs text-purple-400 break-all select-all">
+              <div className="bg-gray-900 rounded-lg p-4">
+                <code className="text-sm text-purple-400 break-all select-all font-mono">
                   SP2PEBKJ2W1ZDDF2QQ6Y4FXKZEDPT9J9R2NKD9WJB
                 </code>
               </div>
             </div>
           </div>
-        </div>
+        </section>
 
         {/* Footer */}
-        <footer className="mt-12 border-t border-gray-800 pt-8 pb-12">
-          <div className="flex flex-col md:flex-row items-center justify-between gap-4">
+        <footer className="border-t border-gray-800 pt-8 pb-12">
+          <div className="flex flex-col md:flex-row items-center justify-between gap-6">
             <div className="flex items-center gap-3">
-              <div className="flex items-center justify-center h-8 w-8 rounded-lg bg-gradient-to-br from-purple-500 to-orange-500">
-                <Layers className="h-4 w-4 text-white" />
+              <div className="flex items-center justify-center h-10 w-10 rounded-xl bg-gradient-to-br from-purple-500 to-orange-500">
+                <Layers className="h-5 w-5 text-white" />
               </div>
-              <span className="text-gray-400">Stacks Bridge Monitor</span>
+              <div>
+                <span className="font-semibold text-white">Stacks Dashboard</span>
+                <p className="text-xs text-gray-500">Built with ❤️ for the Stacks community</p>
+              </div>
             </div>
-            <div className="flex items-center gap-6 text-sm text-gray-400">
-              <a href="https://github.com/serayd61/stacks-bridge-monitor" className="hover:text-white transition-colors">
-                GitHub
-              </a>
-              <a href="https://docs.stacks.co" className="hover:text-white transition-colors">
-                Stacks Docs
-              </a>
-              <a href="https://explorer.hiro.so" className="hover:text-white transition-colors">
+            
+            <div className="flex flex-wrap items-center justify-center gap-6 text-sm">
+              <a href="https://explorer.hiro.so" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white transition-colors">
                 Explorer
               </a>
+              <a href="https://docs.stacks.co" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white transition-colors">
+                Docs
+              </a>
+              <a href="https://stacks.co" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white transition-colors">
+                Stacks.co
+              </a>
+              <a href="https://github.com/serayd61/stacks-bridge-monitor" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white transition-colors">
+                GitHub
+              </a>
             </div>
-            <p className="text-sm text-gray-500">
-              Built for the Stacks ecosystem
-            </p>
+            
+            <div className="text-sm text-gray-500">
+              © 2024 Stacks Dashboard
+            </div>
           </div>
         </footer>
       </div>

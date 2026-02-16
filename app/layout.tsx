@@ -5,14 +5,20 @@ import './globals.css'
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: 'Stacks Bridge Monitor | sBTC & Cross-Chain Analytics',
-  description: 'Real-time monitoring for cross-chain bridges on Stacks blockchain. Track sBTC peg-ins, peg-outs, and bridge volumes.',
-  keywords: ['Stacks', 'sBTC', 'Bitcoin', 'Bridge', 'Cross-chain', 'DeFi', 'Analytics'],
+  title: 'Stacks Dashboard | Ecosystem Analytics, sBTC & DeFi',
+  description: 'The complete Stacks ecosystem dashboard. Real-time analytics for sBTC, DeFi protocols, NFTs, tokens, and network health. Track everything on Stacks in one place.',
+  keywords: ['Stacks', 'STX', 'sBTC', 'Bitcoin', 'DeFi', 'NFT', 'Analytics', 'Dashboard', 'Crypto', 'Web3'],
   authors: [{ name: 'serayd61' }],
   openGraph: {
-    title: 'Stacks Bridge Monitor',
-    description: 'Real-time sBTC and cross-chain bridge analytics',
+    title: 'Stacks Dashboard - Complete Ecosystem Analytics',
+    description: 'Real-time analytics for the Stacks ecosystem. Track sBTC, DeFi, NFTs, and more.',
     type: 'website',
+    siteName: 'Stacks Dashboard',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Stacks Dashboard',
+    description: 'The complete Stacks ecosystem dashboard',
   },
 }
 
