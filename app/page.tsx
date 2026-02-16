@@ -157,6 +157,46 @@ export default async function Home() {
         {/* Transaction Table */}
         <TransactionTable transactions={transactions} />
 
+        {/* Donate Section */}
+        <div className="mt-8 rounded-xl border border-gray-800 bg-gradient-to-br from-purple-500/10 to-orange-500/10 p-6">
+          <div className="text-center mb-6">
+            <h3 className="text-xl font-bold text-white mb-2">Support This Project</h3>
+            <p className="text-gray-400">Help us keep building open-source tools for the Stacks ecosystem</p>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {/* BTC Donation */}
+            <div className="rounded-lg bg-gray-800/50 border border-orange-500/30 p-4">
+              <div className="flex items-center gap-2 mb-3">
+                <div className="h-8 w-8 rounded-full bg-orange-500/20 flex items-center justify-center">
+                  <span className="text-orange-400 font-bold text-sm">₿</span>
+                </div>
+                <span className="font-medium text-white">Bitcoin</span>
+              </div>
+              <div className="bg-gray-900 rounded-lg p-3">
+                <code className="text-xs text-orange-400 break-all select-all">
+                  bc1q8jrgvvmu8ufjaqd47mrjpc8yr3x2rfhgkt9lx7
+                </code>
+              </div>
+            </div>
+            
+            {/* STX Donation */}
+            <div className="rounded-lg bg-gray-800/50 border border-purple-500/30 p-4">
+              <div className="flex items-center gap-2 mb-3">
+                <div className="h-8 w-8 rounded-full bg-purple-500/20 flex items-center justify-center">
+                  <span className="text-purple-400 font-bold text-sm">STX</span>
+                </div>
+                <span className="font-medium text-white">Stacks</span>
+              </div>
+              <div className="bg-gray-900 rounded-lg p-3">
+                <code className="text-xs text-purple-400 break-all select-all">
+                  SP2PEBKJ2W1ZDDF2QQ6Y4FXKZEDPT9J9R2NKD9WJB
+                </code>
+              </div>
+            </div>
+          </div>
+        </div>
+
         {/* Footer */}
         <footer className="mt-12 border-t border-gray-800 pt-8 pb-12">
           <div className="flex flex-col md:flex-row items-center justify-between gap-4">
