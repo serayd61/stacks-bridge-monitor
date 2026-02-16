@@ -190,7 +190,7 @@ function checkAlerts(tx: BridgeTransaction): void {
   }
 }
 
-// Start server
+// Start server (only when not in serverless)
 async function start(): Promise<void> {
   try {
     await app.listen({ port: config.port, host: '0.0.0.0' });
@@ -201,6 +201,15 @@ async function start(): Promise<void> {
   }
 }
 
-start();
+// Only start if running directly (not serverless)
+if (process.env.VERCEL !== '1') {
+  start();
+}
+
+// Export for Vercel serverless
+export default async function handler(req: any, res: any) {
+  await app.ready();
+  app.server.emit('request', req, res);
+}
 
 export { app, config };
