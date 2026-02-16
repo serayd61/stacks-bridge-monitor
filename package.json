@@ -1,0 +1,33 @@
+{
+  "name": "stacks-bridge-monitor",
+  "version": "1.0.0",
+  "description": "Real-time monitoring for cross-chain bridges on Stacks",
+  "main": "dist/index.js",
+  "scripts": {
+    "start": "node dist/index.js",
+    "dev": "tsx watch src/index.ts",
+    "build": "tsc",
+    "test": "vitest"
+  },
+  "keywords": [
+    "stacks",
+    "sbtc",
+    "bridge",
+    "bitcoin",
+    "cross-chain",
+    "monitoring",
+    "analytics"
+  ],
+  "author": "serayd61",
+  "license": "MIT",
+  "dependencies": {
+    "@fastify/cors": "^8.0.0",
+    "fastify": "^4.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "tsx": "^4.0.0",
+    "typescript": "^5.0.0",
+    "vitest": "^1.0.0"
+  }
+}
