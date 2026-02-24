@@ -1,0 +1,56 @@
+[network]
+name = "devnet"
+deployment_fee_rate = 10
+
+[accounts.deployer]
+mnemonic = "twice particular replace describe pagoda grocery vintage belove fresh tip amount trip long bus rich kingdom cash advance fringe code honey scheme memory skin"
+balance = 100_000_000_000_000
+# ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM
+
+[accounts.wallet_1]
+mnemonic = "sell invite acquire kitten bamboo drastic jelly vivid peace spawn twice guilt pave pen trash pretty park cube fragile unaware remain midnight betray rebuild"
+balance = 100_000_000_000_000
+# ST1SJ3DTE5DN7X54YDH5D64R3BCB6A2AG2ZQ8YPD5
+
+[accounts.wallet_2]
+mnemonic = "hold excess usual excess ring elephant install account animal idle number chicken nice income hurt clutch permit garment horse appear recycle found section certain"
+balance = 100_000_000_000_000
+# ST2CY5V39NHDPWSXMW9QDT3HC3GD6Q6XX4CFRK9AG
+
+[accounts.wallet_3]
+mnemonic = "cycle puppy glare enroll cost improve round trend wrist mushroom scorpion tower claim oppose clever elephant dinosaur eight problem before frozen dune wagon high"
+balance = 100_000_000_000_000
+# ST2JHG361ZXG51QTKY2NQCVBPPRRE2KZB1HR05NNC
+
+[accounts.wallet_4]
+mnemonic = "board list obtain sugar hour worth raven scout wilderness attend sound rely penny fox frequent derive system hero lucky wealth produce image pear please"
+balance = 100_000_000_000_000
+# ST2NEB84ASEZ1T2W2YAKS84IQXTA7N1AAGHPF1YHB
+
+[devnet]
+disable_stacks_explorer = false
+disable_stacks_api = false
+stacks_explorer_port = 3002
+stacks_api_port = 3999
+bitcoin_explorer_port = 8001
+orchestrator_port = 20445
+bitcoin_node_p2p_port = 18444
+bitcoin_node_rpc_port = 18443
+stacks_node_p2p_port = 20444
+stacks_node_rpc_port = 20443
+bitcoin_controller_block_time = 30_000
+
+[[devnet.plan.batches]]
+id = 0
+transactions = [
+  { emulated-contract-publish = { contract-name = "bridge-token", emulated-sender = "ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM", path = "contracts/bridge-token.clar", clarity-version = 2 }},
+  { emulated-contract-publish = { contract-name = "fee-manager", emulated-sender = "ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM", path = "contracts/fee-manager.clar", clarity-version = 2 }},
+  { emulated-contract-publish = { contract-name = "oracle", emulated-sender = "ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM", path = "contracts/oracle.clar", clarity-version = 2 }},
+  { emulated-contract-publish = { contract-name = "bridge-registry", emulated-sender = "ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM", path = "contracts/bridge-registry.clar", clarity-version = 2 }},
+  { emulated-contract-publish = { contract-name = "governance", emulated-sender = "ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM", path = "contracts/governance.clar", clarity-version = 2 }},
+  { emulated-contract-publish = { contract-name = "staking-vault", emulated-sender = "ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM", path = "contracts/staking-vault.clar", clarity-version = 2 }},
+  { emulated-contract-publish = { contract-name = "liquidity-pool", emulated-sender = "ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM", path = "contracts/liquidity-pool.clar", clarity-version = 2 }},
+  { emulated-contract-publish = { contract-name = "multisig-treasury", emulated-sender = "ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM", path = "contracts/multisig-treasury.clar", clarity-version = 2 }},
+  { emulated-contract-publish = { contract-name = "nft-rewards", emulated-sender = "ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM", path = "contracts/nft-rewards.clar", clarity-version = 2 }},
+  { emulated-contract-publish = { contract-name = "timelock-controller", emulated-sender = "ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM", path = "contracts/timelock-controller.clar", clarity-version = 2 }},
+]

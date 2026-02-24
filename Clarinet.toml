@@ -1,0 +1,64 @@
+[project]
+name = "stacks-bridge-monitor"
+description = "Stacks Bridge Ecosystem - 10 smart contracts for cross-chain bridge operations, DeFi, governance, and NFT rewards"
+authors = ["serayd61"]
+telemetry = false
+requirements = []
+
+[contracts.bridge-token]
+path = "contracts/bridge-token.clar"
+clarity_version = 2
+epoch = 2.5
+
+[contracts.bridge-registry]
+path = "contracts/bridge-registry.clar"
+clarity_version = 2
+epoch = 2.5
+
+[contracts.fee-manager]
+path = "contracts/fee-manager.clar"
+clarity_version = 2
+epoch = 2.5
+
+[contracts.governance]
+path = "contracts/governance.clar"
+clarity_version = 2
+epoch = 2.5
+
+[contracts.staking-vault]
+path = "contracts/staking-vault.clar"
+clarity_version = 2
+epoch = 2.5
+
+[contracts.liquidity-pool]
+path = "contracts/liquidity-pool.clar"
+clarity_version = 2
+epoch = 2.5
+
+[contracts.oracle]
+path = "contracts/oracle.clar"
+clarity_version = 2
+epoch = 2.5
+
+[contracts.multisig-treasury]
+path = "contracts/multisig-treasury.clar"
+clarity_version = 2
+epoch = 2.5
+
+[contracts.nft-rewards]
+path = "contracts/nft-rewards.clar"
+clarity_version = 2
+epoch = 2.5
+
+[contracts.timelock-controller]
+path = "contracts/timelock-controller.clar"
+clarity_version = 2
+epoch = 2.5
+
+[repl.analysis]
+passes = ["check_checker"]
+[repl.analysis.check_checker]
+strict = false
+trusted_sender = false
+trusted_caller = false
+callee_filter = false

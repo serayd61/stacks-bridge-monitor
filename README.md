@@ -1,59 +1,74 @@
-# Stacks Bridge Monitor
+# Stacks Bridge Ecosystem
 
-Real-time monitoring and analytics for cross-chain bridges on the Stacks blockchain. Track sBTC, wrapped assets, and bridge transactions across Bitcoin, Ethereum, and Stacks.
+Full-stack Stacks blockchain bridge platform with **10 Clarity smart contracts**, real-time monitoring dashboard, and DeFi infrastructure. Cross-chain bridge operations, governance, staking, AMM, and NFT rewards on Stacks.
 
-## Features
+## Smart Contracts (10)
 
-- **Real-time Bridge Tracking**: Monitor sBTC peg-ins and peg-outs
-- **Multi-chain Support**: Bitcoin, Ethereum, Stacks bridges
-- **Volume Analytics**: Daily, weekly, monthly bridge volumes
-- **Fee Analysis**: Track bridge fees and gas costs
-- **Alert System**: Notifications for large transfers
-- **Historical Data**: Complete bridge transaction history
+| # | Contract | File | Description |
+|---|----------|------|-------------|
+| 1 | **Bridge Token** | `bridge-token.clar` | SIP-010 fungible token with mint/burn for bridge operations |
+| 2 | **Bridge Registry** | `bridge-registry.clar` | Peg-in/peg-out management, transaction tracking, operator system |
+| 3 | **Fee Manager** | `fee-manager.clar` | Fee collection, tiered pricing, distribution to treasury/stakers/LPs |
+| 4 | **Governance DAO** | `governance.clar` | On-chain proposals, voting, delegation, execution with timelock |
+| 5 | **Staking Vault** | `staking-vault.clar` | Flexible & locked staking with multipliers (1x-3x), reward distribution |
+| 6 | **Liquidity Pool** | `liquidity-pool.clar` | Constant-product AMM (x*y=k) for BRIDGE/STX trading |
+| 7 | **Oracle** | `oracle.clar` | Decentralized price feeds, TWAP, multi-reporter aggregation |
+| 8 | **Multi-Sig Treasury** | `multisig-treasury.clar` | M-of-N treasury management with spending limits |
+| 9 | **NFT Rewards** | `nft-rewards.clar` | SIP-009 achievement NFTs with 5 tiers (Bronze to Diamond) |
+| 10 | **Timelock Controller** | `timelock-controller.clar` | Time-delayed execution, emergency pause, guardian system |
 
 ## Architecture
 
 ```
-┌─────────────────────────────────────────────────────────────┐
-│                  Stacks Bridge Monitor                      │
-├─────────────────────────────────────────────────────────────┤
-│                                                             │
-│  ┌─────────────┐  ┌─────────────┐  ┌─────────────────────┐  │
-│  │   Bitcoin   │  │  Ethereum   │  │       Stacks        │  │
-│  │   Bridge    │  │   Bridge    │  │       Network       │  │
-│  └──────┬──────┘  └──────┬──────┘  └──────────┬──────────┘  │
-│         │                │                    │              │
-│         └────────────────┼────────────────────┘              │
-│                          │                                   │
-│              ┌───────────┴───────────┐                       │
-│              │    Event Processor    │                       │
-│              │    (Chainhooks)       │                       │
-│              └───────────┬───────────┘                       │
-│                          │                                   │
-│              ┌───────────┴───────────┐                       │
-│              │   Analytics Engine    │                       │
-│              │   - Volume tracking   │                       │
-│              │   - Fee analysis      │                       │
-│              │   - Alert system      │                       │
-│              └───────────────────────┘                       │
-│                                                             │
-└─────────────────────────────────────────────────────────────┘
+┌─────────────────────────────────────────────────────────────────┐
+│                   Stacks Bridge Ecosystem                        │
+├─────────────────────────────────────────────────────────────────┤
+│                                                                  │
+│  ┌──────────────┐  ┌──────────────┐  ┌────────────────────────┐  │
+│  │   Bitcoin     │  │  Ethereum    │  │      Stacks Network    │  │
+│  │   Network     │  │  Network     │  │                        │  │
+│  └──────┬───────┘  └──────┬───────┘  └───────────┬────────────┘  │
+│         │                 │                      │               │
+│         └─────────────────┼──────────────────────┘               │
+│                           │                                      │
+│  ┌────────────────────────┴────────────────────────────────────┐ │
+│  │                   SMART CONTRACTS LAYER                      │ │
+│  │                                                              │ │
+│  │  ┌─────────────┐  ┌──────────────┐  ┌────────────────┐     │ │
+│  │  │ Bridge Token │  │ Bridge       │  │ Fee Manager    │     │ │
+│  │  │ (SIP-010)   │  │ Registry     │  │                │     │ │
+│  │  └─────────────┘  └──────────────┘  └────────────────┘     │ │
+│  │                                                              │ │
+│  │  ┌─────────────┐  ┌──────────────┐  ┌────────────────┐     │ │
+│  │  │ Governance  │  │ Staking      │  │ Liquidity Pool │     │ │
+│  │  │ DAO         │  │ Vault        │  │ (AMM)          │     │ │
+│  │  └─────────────┘  └──────────────┘  └────────────────┘     │ │
+│  │                                                              │ │
+│  │  ┌─────────────┐  ┌──────────────┐  ┌────────────────┐     │ │
+│  │  │ Oracle      │  │ Multi-Sig    │  │ NFT Rewards    │     │ │
+│  │  │             │  │ Treasury     │  │ (SIP-009)      │     │ │
+│  │  └─────────────┘  └──────────────┘  └────────────────┘     │ │
+│  │                                                              │ │
+│  │  ┌──────────────────────────────────────────────────────┐   │ │
+│  │  │           Timelock Controller (Emergency)             │   │ │
+│  │  └──────────────────────────────────────────────────────┘   │ │
+│  └──────────────────────────────────────────────────────────────┘ │
+│                           │                                      │
+│  ┌────────────────────────┴────────────────────────────────────┐ │
+│  │                   MONITORING DASHBOARD                       │ │
+│  │  Next.js 14 | React 18 | Tailwind CSS | TypeScript          │ │
+│  │  Real-time analytics, price tracking, network health         │ │
+│  └──────────────────────────────────────────────────────────────┘ │
+└──────────────────────────────────────────────────────────────────┘
 ```
 
-## Supported Bridges
-
-### sBTC (Bitcoin <-> Stacks)
-- Peg-in: BTC -> sBTC
-- Peg-out: sBTC -> BTC
-- Threshold signatures
-- Deposit tracking
-
-### Wrapped Assets
-- wBTC on Stacks
-- USDC bridges
-- Cross-chain tokens
-
 ## Quick Start
+
+### Prerequisites
+
+- [Clarinet](https://github.com/hirosystems/clarinet) (for smart contract development)
+- [Node.js](https://nodejs.org/) 18+ (for dashboard)
+- npm or yarn
 
 ### Installation
 
@@ -63,116 +78,177 @@ cd stacks-bridge-monitor
 npm install
 ```
 
-### Configuration
-
-Create `.env` file:
-
-```env
-STACKS_API_URL=https://api.hiro.so
-BITCOIN_API_URL=https://blockstream.info/api
-DATABASE_URL=postgresql://localhost:5432/bridge_monitor
-ALERT_WEBHOOK_URL=https://your-webhook.com
-```
-
-### Run
+### Smart Contract Development
 
 ```bash
-# Start the monitor
-npm run start
+# Check all contracts
+clarinet check
 
-# Development mode
-npm run dev
+# Run contract tests
+clarinet test
 
-# Run tests
-npm test
+# Launch local devnet
+clarinet devnet start
+
+# Open Clarinet console (interactive REPL)
+clarinet console
 ```
 
-## API Endpoints
+### Dashboard Development
 
-### Bridge Statistics
-```
-GET /api/bridges/stats
-GET /api/bridges/volume?period=24h
-GET /api/bridges/fees
-```
-
-### sBTC Tracking
-```
-GET /api/sbtc/peg-ins
-GET /api/sbtc/peg-outs
-GET /api/sbtc/supply
+```bash
+npm run dev       # Start development server
+npm run build     # Production build
+npm start         # Start production server
 ```
 
-### Transactions
+## Contract Details
+
+### 1. Bridge Token (SIP-010)
+- Standard fungible token for bridge operations
+- Authorized minter/burner system for bridge contracts
+- Mint (peg-in) and burn (peg-out) functionality
+- Pause controls for emergency situations
+- Max supply: 1 Billion tokens (6 decimals)
+
+### 2. Bridge Registry
+- Records all peg-in/peg-out transactions
+- Bitcoin TXID double-spend prevention
+- Operator-based multi-signer system
+- Transaction lifecycle: Pending -> Confirmed -> Completed
+- Volume tracking and statistics
+
+### 3. Fee Manager
+- Volume-based tiered fees (Bronze 0.25% -> Diamond 0.05%)
+- Fee distribution: 40% Treasury, 40% Stakers, 20% LPs
+- Whitelist for zero-fee addresses
+- Epoch-based fee tracking
+- Claim cooldown system
+
+### 4. Governance DAO
+- On-chain proposal creation and voting
+- Delegated voting power
+- Configurable voting period (~7 days default)
+- Execution delay for security
+- Quorum requirements
+
+### 5. Staking Vault
+- Flexible staking (1x multiplier)
+- 30-day lock (1.5x multiplier)
+- 90-day lock (2x multiplier)
+- 180-day lock (3x multiplier)
+- Auto-compounding reward distribution
+
+### 6. Liquidity Pool (AMM)
+- Constant-product formula (x*y=k)
+- BRIDGE/STX trading pair
+- 0.3% swap fee
+- LP token minting/burning
+- Price quotes and slippage protection
+
+### 7. Oracle
+- Multi-reporter price feeds
+- BTC/USD, STX/USD, BRIDGE/USD, BTC/STX, BRIDGE/STX
+- Time-Weighted Average Price (TWAP)
+- Staleness checks (12 hours max)
+- 30% max deviation protection
+
+### 8. Multi-Sig Treasury
+- M-of-N signature scheme
+- Transaction proposal, signing, execution
+- Daily spending limits
+- 7-day transaction expiry
+- Full audit trail
+
+### 9. NFT Rewards (SIP-009)
+- 5 Achievement tiers: Bronze, Silver, Gold, Platinum, Diamond
+- Based on bridge usage and volume
+- Limited supply per tier (100-10,000)
+- Transferable NFTs
+- Achievement tracking system
+
+### 10. Timelock Controller
+- Minimum 1-day delay on critical operations
+- Emergency pause system with guardian roles
+- Proposer/Executor/Guardian role separation
+- Grace period for execution
+- Emergency cooldown after deactivation
+
+## Project Structure
+
 ```
-GET /api/transactions?bridge=sbtc&limit=100
-GET /api/transactions/:txid
+stacks-bridge-monitor/
+├── contracts/                    # Clarity Smart Contracts
+│   ├── bridge-token.clar         # SIP-010 Bridge Token
+│   ├── bridge-registry.clar      # Bridge Operations Registry
+│   ├── fee-manager.clar          # Fee Collection & Distribution
+│   ├── governance.clar           # DAO Governance
+│   ├── staking-vault.clar        # Token Staking & Rewards
+│   ├── liquidity-pool.clar       # AMM Liquidity Pool
+│   ├── oracle.clar               # Price Oracle
+│   ├── multisig-treasury.clar    # Multi-Sig Treasury
+│   ├── nft-rewards.clar          # SIP-009 NFT Rewards
+│   └── timelock-controller.clar  # Timelock & Emergency
+├── tests/
+│   └── contracts/                # Clarinet Tests
+├── settings/
+│   └── Devnet.toml               # Devnet Configuration
+├── app/                          # Next.js Dashboard
+│   ├── api/                      # API Routes
+│   ├── page.tsx                  # Main Dashboard
+│   └── layout.tsx                # Root Layout
+├── components/                   # React Components
+├── lib/                          # Utilities
+├── Clarinet.toml                 # Clarinet Project Config
+├── package.json                  # Node.js Dependencies
+└── README.md
 ```
 
-## Data Models
+## Deployment Order
 
-### Bridge Transaction
-```typescript
-interface BridgeTransaction {
-  id: string;
-  bridge: 'sbtc' | 'wbtc' | 'usdc';
-  type: 'peg-in' | 'peg-out';
-  sourceChain: string;
-  destChain: string;
-  amount: bigint;
-  fee: bigint;
-  status: 'pending' | 'confirmed' | 'failed';
-  sourceTxId: string;
-  destTxId: string;
-  timestamp: Date;
-}
-```
+Contracts should be deployed in this order due to dependencies:
 
-### Bridge Stats
-```typescript
-interface BridgeStats {
-  totalVolume24h: bigint;
-  totalVolume7d: bigint;
-  totalTransactions: number;
-  avgFee: bigint;
-  largestTransaction: bigint;
-  activeUsers: number;
-}
-```
+1. `bridge-token` - Core token (no dependencies)
+2. `fee-manager` - Fee logic (no dependencies)
+3. `oracle` - Price feeds (no dependencies)
+4. `bridge-registry` - Uses token + fees
+5. `governance` - Uses token for voting
+6. `staking-vault` - Uses token for staking
+7. `liquidity-pool` - Uses token for AMM
+8. `multisig-treasury` - Uses token for treasury
+9. `nft-rewards` - Uses registry for achievements
+10. `timelock-controller` - Wraps all admin operations
 
-## Alerts
+## Tech Stack
 
-Configure alerts for:
-- Large transfers (> threshold)
-- Unusual volume spikes
-- Bridge delays
-- Failed transactions
-
-```typescript
-const alertConfig = {
-  largeTransferThreshold: 10_000_000, // 10 BTC in sats
-  volumeSpikeMultiplier: 3,
-  delayThresholdMinutes: 60
-};
-```
+- **Smart Contracts**: Clarity (Stacks blockchain)
+- **Frontend**: Next.js 14, React 18, TypeScript
+- **Styling**: Tailwind CSS
+- **Icons**: Lucide React
+- **APIs**: Hiro Stacks API, Blockstream, CoinGecko
+- **Testing**: Vitest (Clarinet)
+- **Development**: Clarinet, Node.js
 
 ## Roadmap
 
+- [x] 10 Smart contracts
+- [x] Real-time monitoring dashboard
 - [x] sBTC peg-in/peg-out tracking
 - [x] Volume analytics
-- [x] Basic alerting
-- [ ] Ethereum bridge support
-- [ ] Historical charts
+- [x] DeFi protocol tracking
+- [ ] Mainnet deployment
+- [ ] Contract auditing
+- [ ] Ethereum bridge integration
 - [ ] Mobile app
 - [ ] Telegram/Discord bots
-- [ ] API rate limiting
+- [ ] Subgraph indexer
 
 ## Contributing
 
 1. Fork the repository
-2. Create feature branch
-3. Commit changes
-4. Push to branch
+2. Create feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit changes (`git commit -m 'Add amazing feature'`)
+4. Push to branch (`git push origin feature/amazing-feature`)
 5. Open Pull Request
 
 ## License
