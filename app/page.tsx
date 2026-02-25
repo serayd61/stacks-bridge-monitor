@@ -9,6 +9,7 @@ import NFTCollections from '@/components/NFTCollections';
 import EcosystemStats from '@/components/EcosystemStats';
 import PriceHeader from '@/components/PriceHeader';
 import QuickLinks from '@/components/QuickLinks';
+import ContractEcosystem from '@/components/ContractEcosystem';
 import {
   fetchBridgeStats,
   fetchSBTCStats,
@@ -193,6 +194,20 @@ export default async function Home() {
             </div>
           </div>
           <TokenTable tokens={topTokens} />
+        </section>
+
+        {/* Smart Contract Ecosystem */}
+        <section>
+          <div className="flex items-center gap-3 mb-6">
+            <div className="h-8 w-8 rounded-lg bg-green-500/20 flex items-center justify-center">
+              <span className="text-green-400 font-bold text-sm">16</span>
+            </div>
+            <div>
+              <h2 className="text-xl font-bold text-white">Smart Contract Ecosystem</h2>
+              <p className="text-sm text-gray-400">16 Clarity contracts powering the bridge</p>
+            </div>
+          </div>
+          <ContractEcosystem />
         </section>
 
         {/* DeFi & NFT Section */}

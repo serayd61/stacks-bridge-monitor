@@ -53,4 +53,10 @@ transactions = [
   { emulated-contract-publish = { contract-name = "multisig-treasury", emulated-sender = "ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM", path = "contracts/multisig-treasury.clar", clarity-version = 2 }},
   { emulated-contract-publish = { contract-name = "nft-rewards", emulated-sender = "ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM", path = "contracts/nft-rewards.clar", clarity-version = 2 }},
   { emulated-contract-publish = { contract-name = "timelock-controller", emulated-sender = "ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM", path = "contracts/timelock-controller.clar", clarity-version = 2 }},
+  { emulated-contract-publish = { contract-name = "flash-loan", emulated-sender = "ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM", path = "contracts/flash-loan.clar", clarity-version = 2 }},
+  { emulated-contract-publish = { contract-name = "insurance-pool", emulated-sender = "ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM", path = "contracts/insurance-pool.clar", clarity-version = 2 }},
+  { emulated-contract-publish = { contract-name = "yield-farming", emulated-sender = "ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM", path = "contracts/yield-farming.clar", clarity-version = 2 }},
+  { emulated-contract-publish = { contract-name = "bridge-validator", emulated-sender = "ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM", path = "contracts/bridge-validator.clar", clarity-version = 2 }},
+  { emulated-contract-publish = { contract-name = "token-vesting", emulated-sender = "ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM", path = "contracts/token-vesting.clar", clarity-version = 2 }},
+  { emulated-contract-publish = { contract-name = "referral-system", emulated-sender = "ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM", path = "contracts/referral-system.clar", clarity-version = 2 }},
 ]
