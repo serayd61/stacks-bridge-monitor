@@ -1,6 +1,6 @@
 [project]
 name = "stacks-bridge-monitor"
-description = "Stacks Bridge Ecosystem - 10 smart contracts for cross-chain bridge operations, DeFi, governance, and NFT rewards"
+description = "Stacks Bridge Ecosystem - 16 smart contracts for cross-chain bridge operations, DeFi, governance, NFT rewards, flash loans, insurance, yield farming, validators, vesting, and referrals"
 authors = ["serayd61"]
 telemetry = false
 requirements = []
@@ -52,6 +52,36 @@ epoch = 2.5
 
 [contracts.timelock-controller]
 path = "contracts/timelock-controller.clar"
+clarity_version = 2
+epoch = 2.5
+
+[contracts.flash-loan]
+path = "contracts/flash-loan.clar"
+clarity_version = 2
+epoch = 2.5
+
+[contracts.insurance-pool]
+path = "contracts/insurance-pool.clar"
+clarity_version = 2
+epoch = 2.5
+
+[contracts.yield-farming]
+path = "contracts/yield-farming.clar"
+clarity_version = 2
+epoch = 2.5
+
+[contracts.bridge-validator]
+path = "contracts/bridge-validator.clar"
+clarity_version = 2
+epoch = 2.5
+
+[contracts.token-vesting]
+path = "contracts/token-vesting.clar"
+clarity_version = 2
+epoch = 2.5
+
+[contracts.referral-system]
+path = "contracts/referral-system.clar"
 clarity_version = 2
 epoch = 2.5
 
