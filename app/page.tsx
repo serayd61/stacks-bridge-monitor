@@ -9,6 +9,8 @@ import NFTCollections from '@/components/NFTCollections';
 import EcosystemStats from '@/components/EcosystemStats';
 import PriceHeader from '@/components/PriceHeader';
 import QuickLinks from '@/components/QuickLinks';
+import WalletConnect from '@/components/WalletConnect';
+import BridgeTransfer from '@/components/BridgeTransfer';
 import {
   fetchBridgeStats,
   fetchSBTCStats,
@@ -76,6 +78,7 @@ export default async function Home() {
                 <div className="h-2 w-2 rounded-full bg-green-400 animate-pulse" />
                 <span className="text-xs text-green-400 font-medium">Mainnet Live</span>
               </div>
+              <WalletConnect />
               <a
                 href="https://github.com/serayd61/stacks-bridge-monitor"
                 target="_blank"
@@ -164,7 +167,7 @@ export default async function Home() {
             />
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
             <div className="lg:col-span-2">
               <PriceChart
                 btcPrice={sbtcStats.btcPrice}
@@ -179,6 +182,9 @@ export default async function Home() {
               />
             </div>
           </div>
+
+          {/* Bridge Operations -- wallet-connected contract interactions */}
+          <BridgeTransfer />
         </section>
 
         {/* Tokens Section */}
