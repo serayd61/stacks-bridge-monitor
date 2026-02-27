@@ -1,73 +1,52 @@
 'use client';
 
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import { Wallet, LogOut, Copy, Check } from 'lucide-react';
+import { AppConfig, UserSession, showConnect } from '@stacks/connect';
+
+const appConfig = new AppConfig(['store_write', 'publish_data']);
+const userSession = new UserSession({ appConfig });
 
 export default function WalletConnect() {
   const [address, setAddress] = useState<string | null>(null);
   const [copied, setCopied] = useState(false);
-  const [isClient, setIsClient] = useState(false);
-  const userSessionRef = useRef<any>(null);
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    setIsClient(true);
-    
-    const initSession = async () => {
+    setMounted(true);
+    if (userSession.isUserSignedIn()) {
       try {
-        const { AppConfig, UserSession } = await import('@stacks/connect');
-        const appConfig = new AppConfig(['store_write', 'publish_data']);
-        const userSession = new UserSession({ appConfig });
-        userSessionRef.current = userSession;
-        
-        if (userSession.isUserSignedIn()) {
-          const userData = userSession.loadUserData();
-          const addr = userData.profile.stxAddress.mainnet;
-          setAddress(addr);
-        }
+        const userData = userSession.loadUserData();
+        setAddress(userData.profile.stxAddress.mainnet);
       } catch (e) {
-        console.error('Init session error:', e);
+        console.error('Load user data error:', e);
       }
-    };
-    
-    initSession();
+    }
   }, []);
 
-  const connect = async () => {
-    try {
-      const { showConnect, AppConfig, UserSession } = await import('@stacks/connect');
-      
-      if (!userSessionRef.current) {
-        const appConfig = new AppConfig(['store_write', 'publish_data']);
-        userSessionRef.current = new UserSession({ appConfig });
-      }
-      
-      showConnect({
-        appDetails: {
-          name: 'Stacks Bridge Monitor',
-          icon: window.location.origin + '/stacks-icon.svg',
-        },
-        onFinish: () => {
-          window.location.reload();
-        },
-        onCancel: () => {
-          console.log('User cancelled');
-        },
-        userSession: userSessionRef.current,
-      });
-    } catch (e) {
-      console.error('Connect error:', e);
-    }
+  const handleConnect = () => {
+    showConnect({
+      appDetails: {
+        name: 'Stacks Bridge Monitor',
+        icon: typeof window !== 'undefined' ? `${window.location.origin}/stacks-icon.svg` : '/stacks-icon.svg',
+      },
+      redirectTo: '/',
+      onFinish: () => {
+        if (userSession.isUserSignedIn()) {
+          const userData = userSession.loadUserData();
+          setAddress(userData.profile.stxAddress.mainnet);
+        }
+      },
+      onCancel: () => {
+        console.log('Connect cancelled');
+      },
+      userSession,
+    });
   };
 
-  const disconnect = async () => {
-    try {
-      if (userSessionRef.current) {
-        userSessionRef.current.signUserOut();
-      }
-      setAddress(null);
-    } catch (e) {
-      console.error('Disconnect error:', e);
-    }
+  const handleDisconnect = () => {
+    userSession.signUserOut('/');
+    setAddress(null);
   };
 
   const copyAddress = () => {
@@ -78,7 +57,7 @@ export default function WalletConnect() {
     }
   };
 
-  if (!isClient) return null;
+  if (!mounted) return null;
 
   if (address) {
     return (
@@ -92,7 +71,7 @@ export default function WalletConnect() {
           {copied ? <Check className="h-3 w-3" /> : <Copy className="h-3 w-3" />}
         </button>
         <button
-          onClick={disconnect}
+          onClick={handleDisconnect}
           className="p-2 rounded-lg bg-gray-800 text-gray-400 hover:text-white hover:bg-gray-700 transition-colors"
           title="Disconnect"
         >
@@ -104,7 +83,7 @@ export default function WalletConnect() {
 
   return (
     <button
-      onClick={connect}
+      onClick={handleConnect}
       className="flex items-center gap-2 px-4 py-2 rounded-lg bg-gradient-to-r from-purple-500 to-orange-500 text-white text-sm font-medium hover:opacity-90 transition-opacity"
     >
       <Wallet className="h-4 w-4" />
