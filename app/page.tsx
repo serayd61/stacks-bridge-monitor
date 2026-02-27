@@ -13,6 +13,7 @@ import WalletConnect from '@/components/WalletConnect';
 import BridgeTransfer from '@/components/BridgeTransfer';
 import DAOPanel from '@/components/DAOPanel';
 import AdminPanel from '@/components/AdminPanel';
+import YieldFarming from '@/components/YieldFarming';
 import {
   fetchBridgeStats,
   fetchSBTCStats,
@@ -185,14 +186,15 @@ export default async function Home() {
             </div>
           </div>
 
-          {/* Bridge Operations -- wallet-connected contract interactions */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          {/* Bridge Operations & Yield Farming */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
             <BridgeTransfer />
-            <DAOPanel />
+            <YieldFarming />
           </div>
-          
-          {/* Admin Controls */}
-          <div className="mt-6">
+
+          {/* DAO & Admin Panels */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <DAOPanel />
             <AdminPanel />
           </div>
         </section>
