@@ -89,7 +89,7 @@ export default function YieldFarming() {
           if (posJson.value) {
             setUserPosition({
               deposited: formatStx(posJson.value.amount?.value || '0'),
-              claimable: '0', // Will fetch separately
+              claimable: '0',
               totalEarned: formatStx(posJson.value['total-earned']?.value || '0'),
               nextClaimBlock: parseInt(posJson.value['last-claim-block']?.value || '0') + 144,
             });
