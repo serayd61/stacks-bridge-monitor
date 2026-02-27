@@ -29,7 +29,7 @@ export default function DAOPanel() {
         network: STACKS_MAINNET,
         appDetails: {
           name: 'Stacks Bridge Monitor',
-          icon: '/stacks-icon.png',
+          icon: '/stacks-icon.svg',
         },
         onFinish: () => {
           setProposalTitle('');
@@ -59,7 +59,7 @@ export default function DAOPanel() {
         network: STACKS_MAINNET,
         appDetails: {
           name: 'Stacks Bridge Monitor',
-          icon: '/stacks-icon.png',
+          icon: '/stacks-icon.svg',
         },
         onFinish: () => setLoading(false),
         onCancel: () => setLoading(false),

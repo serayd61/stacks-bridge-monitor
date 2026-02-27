@@ -1,46 +1,73 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Wallet, LogOut, Copy, Check } from 'lucide-react';
 
 export default function WalletConnect() {
   const [address, setAddress] = useState<string | null>(null);
   const [copied, setCopied] = useState(false);
   const [isClient, setIsClient] = useState(false);
+  const userSessionRef = useRef<any>(null);
 
   useEffect(() => {
     setIsClient(true);
-    const stored = localStorage.getItem('stacks-address');
-    if (stored) setAddress(stored);
+    
+    const initSession = async () => {
+      try {
+        const { AppConfig, UserSession } = await import('@stacks/connect');
+        const appConfig = new AppConfig(['store_write', 'publish_data']);
+        const userSession = new UserSession({ appConfig });
+        userSessionRef.current = userSession;
+        
+        if (userSession.isUserSignedIn()) {
+          const userData = userSession.loadUserData();
+          const addr = userData.profile.stxAddress.mainnet;
+          setAddress(addr);
+        }
+      } catch (e) {
+        console.error('Init session error:', e);
+      }
+    };
+    
+    initSession();
   }, []);
 
   const connect = async () => {
     try {
       const { showConnect, AppConfig, UserSession } = await import('@stacks/connect');
-      const appConfig = new AppConfig(['store_write']);
-      const userSession = new UserSession({ appConfig });
+      
+      if (!userSessionRef.current) {
+        const appConfig = new AppConfig(['store_write', 'publish_data']);
+        userSessionRef.current = new UserSession({ appConfig });
+      }
       
       showConnect({
         appDetails: {
           name: 'Stacks Bridge Monitor',
-          icon: '/stacks-icon.png',
+          icon: window.location.origin + '/stacks-icon.svg',
         },
         onFinish: () => {
-          const userData = userSession.loadUserData();
-          const addr = userData.profile.stxAddress.mainnet;
-          setAddress(addr);
-          localStorage.setItem('stacks-address', addr);
+          window.location.reload();
         },
-        userSession,
+        onCancel: () => {
+          console.log('User cancelled');
+        },
+        userSession: userSessionRef.current,
       });
     } catch (e) {
       console.error('Connect error:', e);
     }
   };
 
-  const disconnect = () => {
-    setAddress(null);
-    localStorage.removeItem('stacks-address');
+  const disconnect = async () => {
+    try {
+      if (userSessionRef.current) {
+        userSessionRef.current.signUserOut();
+      }
+      setAddress(null);
+    } catch (e) {
+      console.error('Disconnect error:', e);
+    }
   };
 
   const copyAddress = () => {

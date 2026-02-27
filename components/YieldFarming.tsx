@@ -102,7 +102,7 @@ export default function YieldFarming() {
       showConnect({
         appDetails: {
           name: 'Stacks Bridge Monitor',
-          icon: '/stacks-icon.png',
+          icon: '/stacks-icon.svg',
         },
         onFinish: () => {
           const userData = userSession.loadUserData();
@@ -135,7 +135,7 @@ export default function YieldFarming() {
         functionArgs: [uintCV(microStx)],
         postConditionMode: PostConditionMode.Allow,
         network: STACKS_MAINNET,
-        appDetails: { name: 'Stacks Bridge Monitor', icon: '/stacks-icon.png' },
+        appDetails: { name: 'Stacks Bridge Monitor', icon: '/stacks-icon.svg' },
         onFinish: handleTxFinish,
         onCancel: handleTxCancel,
       });
@@ -162,7 +162,7 @@ export default function YieldFarming() {
         functionArgs: [uintCV(microStx)],
         postConditionMode: PostConditionMode.Allow,
         network: STACKS_MAINNET,
-        appDetails: { name: 'Stacks Bridge Monitor', icon: '/stacks-icon.png' },
+        appDetails: { name: 'Stacks Bridge Monitor', icon: '/stacks-icon.svg' },
         onFinish: handleTxFinish,
         onCancel: handleTxCancel,
       });
@@ -186,7 +186,7 @@ export default function YieldFarming() {
         functionArgs: [],
         postConditionMode: PostConditionMode.Allow,
         network: STACKS_MAINNET,
-        appDetails: { name: 'Stacks Bridge Monitor', icon: '/stacks-icon.png' },
+        appDetails: { name: 'Stacks Bridge Monitor', icon: '/stacks-icon.svg' },
         onFinish: handleTxFinish,
         onCancel: handleTxCancel,
       });

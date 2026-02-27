@@ -28,7 +28,7 @@ export default function BridgeTransfer() {
         network: STACKS_MAINNET,
         appDetails: {
           name: 'Stacks Bridge Monitor',
-          icon: '/stacks-icon.png',
+          icon: '/stacks-icon.svg',
         },
         onFinish: (data) => {
           console.log('TX:', data.txId);
